@@ -1,6 +1,19 @@
 /** 
- *  최초 작성일 2022-09-28
- *  최초 작성자 2022-09-28
+ * -- 작성자 nect2r@kakao.com , nect2r.tistory.com
+ * -- 최초 작성일 2022-09-28
+ * -- 마지막 작성일 2022-10-07
+ * 
+ * -- 작성 목적 --
+ * -- 공통적으로 사용되는 javascript 함수 모음
+ * 
+ * -- 함수명 정의 --
+ * -- ※ 최대한 정의에 맞게 작성하려 했으나 isEmpty처럼 해당되지 않을 수 있으니 사용 전 함수 확인 필 ※
+ * -- is*() {} 오직 *만 가지고 있는지 확인한다.
+ * -- has*() {} *를 가지고 있는지 확인한다.
+ */
+
+/**
+ * Start of is function
  */
 
 /** 
@@ -90,7 +103,7 @@
  * @param {*} value 빈값인지 확인하려는 파라미터
  * @returns 빈값이면 true 아니면 false
  */
-function isEmpty (value) {
+function isEmpty(value) {
     if (value === null) return true
     if (typeof value === 'undefined') return true
     if (typeof value === 'string' && value === '') return true
@@ -100,6 +113,136 @@ function isEmpty (value) {
 
     return false
 }
+
+/**
+ * 파라미터가 오직 한글인지 확인한다.(자음,모음도 포함)
+ * 
+ * @param {*} value 
+ * @returns 한글만 있으면 true, isEmpty() 또는 아니면 false
+ */
+ function isKorean(value) {
+    var reg = /^[ㄱ-ㅎ가-힣-ㅏ-ㅣ]+$/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return reg.test(value.val())
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 오직 알파벳인지 확인한다.
+ * 
+ * @param {*} value 
+ * @returns 알파벳만 있으면 true, isEmpty() 또는 아니면 false
+ */
+function isAlphabet(value) {
+    var reg = /^[a-zA-Z]+$/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return reg.test(value.val())
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 정수인지 여부
+ * 
+ * @param {*} value 
+ * @returns 숫자만 있으면 true, isEmpty() 또는 아니면 false
+ */
+ function isInteger(value) {
+    var reg = /^[0-9]+$/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return reg.test(value.val())
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 오직 숫자인지 여부
+ * 
+ * @param {*} value 
+ * @returns 숫자만 있으면 true, isEmpty() 또는 아니면 false
+ */
+function isNumber(value) {
+    var reg = /^[0-9]+$/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return reg.test(value.val())
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 숫자와영문인지 여부
+ * 
+ * @param {*} value 
+ * @returns 숫자와알파벳만 true, 아니면 false
+ */
+function isAlphabetWithDigit(value) {
+    var reg = /[^a-zA-Z0-9]/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return !reg.test(value.val())
+    } else {
+        return !reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 사업자번호인지 여부
+ * 
+ * @param {*} value 
+ * @returns 사업자번호면 true, 아니면 false
+ */
+function isBranchRegnum(value) {
+    var reg = /^\d{3}-\d{2}-\d{5}$/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return !reg.test(value.val())
+    } else {
+        return !reg.test(value)
+    }
+}
+
+/**
+ * 파라미터에 공백존재 여부
+ * 
+ * @param {*} value 
+ * @returns 공백이 존재하면 true, 아니면 false
+ */
+function isSpace(value) {
+    var reg = / /
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return !reg.test(value.val())
+    } else {
+        return !reg.test(value)
+    }
+}
+
+/**
+ * End of is function
+ */
 
 /**
  * ajax 공통 모듈
@@ -112,14 +255,14 @@ function isEmpty (value) {
  */
 function ajaxSubmit(url, data, dataType, methodType, callback) {
     $.ajax({
-        url : url,
-        data : data,
-        dataType : dataType,
-        type : methodType,
-        success : function(result) {
+        url: url,
+        data: data,
+        dataType: dataType,
+        type: methodType,
+        success: function (result) {
             callback(result)
         },
-        error : function(e) {
+        error: function (e) {
             alert("error : " + e.responseText)
         }
     })
@@ -134,8 +277,8 @@ function ajaxSubmit(url, data, dataType, methodType, callback) {
 function checkType(value) {
     var type = typeof value
 
-    if(value === null) return 'null'
-    if(type == 'object' && Array.isArray(value)) return 'array'
+    if (value === null) return 'null'
+    if (type == 'object' && Array.isArray(value)) return 'array'
 
     return type
 }
@@ -149,11 +292,11 @@ function checkType(value) {
 function valiEmail(email) {
     var reg = /^([\w-]+)@((\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
 
-    if(isEmpty(email)) return true
+    if (isEmpty(email)) return true
 
-    if(checkType(email) == 'object'){
+    if (checkType(email) == 'object') {
         return !reg.test(email.val())
-    }else{
+    } else {
         return !reg.test(email)
     }
 }
@@ -167,11 +310,11 @@ function valiEmail(email) {
 function valiPhone(phone) {
     var reg = /^\d{2,3}-\d{3,4}-\d{4}$/
 
-    if(isEmpty(phone)) return true
+    if (isEmpty(phone)) return true
 
-    if(checkType(phone) == 'object'){
+    if (checkType(phone) == 'object') {
         return !reg.test(phone.val())
-    }else{
+    } else {
         return !reg.test(phone)
     }
 }
@@ -183,107 +326,17 @@ function valiPhone(phone) {
  * @returns 
  */
 function valiBirthday(birthday) {
-    if(isEmpty(birthday)) return true
+    if (isEmpty(birthday)) return true
 
     birthday = birthday.replace(/[^0-9]/g, "");
 
     var reg6 = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/g
     var reg8 = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/g
 
-    if(checkType(birthday) == 'object'){
+    if (checkType(birthday) == 'object') {
         return birthday.val().length == 8 ? !reg8.test(birthday.val()) : !reg6.test(birthday.val())
-    }else{
+    } else {
         return birthday.length == 8 ? !reg8.test(birthday) : !reg6.test(birthday)
-    }
-}
-
-/**
- * 파라미터가 한글인지 여부
- * 
- * @param {*} value 
- * @returns 한글이면 true, 아니면 false
- */
-function isKorean(value) {
-    var reg = /[^ㄱ-ㅎ가-힣]/
-
-    if(isEmpty(value)) return true
-
-    if(checkType(value) == 'object'){
-        return !reg.test(value.val())
-    }else{
-        return !reg.test(value)
-    }
-}
-
-/**
- * 파라미터가 알파벳인지 여부
- * 
- * @param {*} value 
- * @returns 알파벳이면 true, 아니면 false
- */
-function isAlphabet(value) {
-    var reg = /[^a-zA-Z]/
-
-    if(isEmpty(value)) return true
-
-    if(checkType(value) == 'object'){
-        return !reg.test(value.val())
-    }else{
-        return !reg.test(value)
-    }
-}
-
-/**
- * 파라미터가 숫자인지 여부
- * 
- * @param {*} value 
- * @returns 숫자면 true, 아니면 false
- */
-function isDigit(value) {
-    var reg = /[^0-9]/
-
-    if(isEmpty(value)) return false
-
-    if(checkType(value) == 'object'){
-        return !reg.test(value.val())
-    }else{
-        return !reg.test(value)
-    }
-}
-
-/**
- * 파라미터가 숫자와영문인지 여부
- * 
- * @param {*} value 
- * @returns 숫자와알파벳만 true, 아니면 false
- */
-function isAlphabetWithDigit(value) {
-    var reg = /[^a-zA-Z0-9]/
-
-    if(isEmpty(value)) return false
-
-    if(checkType(value) == 'object'){
-        return !reg.test(value.val())
-    }else{
-        return !reg.test(value)
-    }
-}
-
-/**
- * 
- * 
- * @param {*} value 
- * @returns 
- */
-function isBranchRegnum(value) {
-    var reg = /^\d{3}-\d{2}-\d{5}$/
-
-    if(isEmpty(value)) return false
-
-    if(checkType(value) == 'object'){
-        return !reg.test(value.val())
-    }else{
-        return !reg.test(value)
     }
 }
 
@@ -308,7 +361,7 @@ function digitWithoutCommas(value) {
 }
 
 /**
- * 
+ * HTML태그 삭제
  * 
  * @param {*} html 
  * @returns 
@@ -316,3 +369,53 @@ function digitWithoutCommas(value) {
 function removeHtmlTag(html) {
     return html.replace(/(<([^>]+)>)/gi, "")
 }
+
+function getCurrentScreenId() {
+    var currentUrl = location.href; //현재 윈도우의 문서가 위치하는 url을 String으로 반환한다.
+
+    return currentUrl.substring(currentUrl.lastIndexOf('/') + 1, currentUrl.indexOf('.dev'));   // '/'문자 부터 문자열의 처음까지
+}
+
+/**
+ * Start of has function
+ */
+
+/**
+ * 파라미터가 한글을 가지고 있는지 확인한다.(자음,모음도 포함)
+ * 
+ * @param {*} value 
+ * @returns 한글이 있으면 true, isEmpty() 또는 아니면 false
+ */
+ function hasKorean(value) {
+    var reg = /[ㄱ-ㅎ가-힣-ㅏ-ㅣ]/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return reg.test(value.val())
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 알파벳을 가지고 있는지 확인한다.
+ * 
+ * @param {*} value 
+ * @returns 알파벳이 있으면 true, isEmpty() 또는 아니면 false
+ */
+ function hasAlphabet(value) {
+    var reg = /[a-zA-Z]/
+
+    if (isEmpty(value)) return false
+
+    if (checkType(value) == 'object') {
+        return reg.test(value.val())
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * End of has function
+ */
