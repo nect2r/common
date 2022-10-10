@@ -12,6 +12,7 @@
  * -- is*With* () {} n 에 모두 해당하는지 확인한다.
  * -- is*by<Text> () {} <Text>에 의해 * 에 해당하는지 확인한다.
  * -- has* () {} *이 포함되는지 확인한다.
+ * -- get* () {} *를 가져온다.
  */
 
 /**
@@ -117,6 +118,17 @@ function isEmpty(value) {
 }
 
 /**
+ * common.js 사용을 위해서 jquery의 여부를 확인함
+ * 
+ * @returns jquery가 존재하면 true, 아니면 false
+ */
+ function isJquery() {
+    if(typeof jQuery == 'undefined') return false
+
+    return true
+}
+
+/**
  * 파라미터가 한글인지 확인한다.(자음,모음도 포함)
  * 
  * @param {*} value 
@@ -127,8 +139,8 @@ function isEmpty(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -145,8 +157,8 @@ function isAlphabet(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -161,8 +173,8 @@ function isAlphabet(value) {
  function isInteger(value) {
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return Number(value.val()) % 1 === 0
+    if (getType(value) == 'object') {
+        return Number(getValue(value)) % 1 === 0
     } else {
         return Number(value) % 1 === 0
     }
@@ -179,12 +191,13 @@ function isAlphabet(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
 }
+
 /**
  * 파라미터가 소수인지 확인한다.(정규식)
  * 
@@ -196,8 +209,8 @@ function isFloatByRegExp(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -214,8 +227,8 @@ function isNumber(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -232,8 +245,8 @@ function isAlphabetWithInteger(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return !reg.test(value.val())
+    if (getType(value) == 'object') {
+        return !reg.test(getValue(value))
     } else {
         return !reg.test(value)
     }
@@ -250,10 +263,67 @@ function isBranchRegnum(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 이메일 형식인지 확인한다.
+ * 
+ * @param {*} value 
+ * @returns 이메일 형식이면 true, 아니면 false
+ */
+ function isEmail(value) {
+    var reg = /^([\w-]+)@((\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+
+    if (isEmpty(value)) return true
+
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 휴대폰 형식인지 확인한다.
+ * 
+ * @param {*} value 
+ * @returns 휴대폰 형식이면 true, 아니면 false
+ */
+function isPhone(value) {
+    var reg = /^\d{2,3}-\d{3,4}-\d{4}$/
+
+    if (isEmpty(value)) return true
+
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 생년월일 형식인지 확인한다.
+ * 
+ * @param {*} value 8자리(19001231),6자리(001231), -제거하지 않아도됨
+ * @returns 
+ */
+function isBirthday(value) {
+    if (isEmpty(value)) return true
+    
+    var reg6 = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/g
+    var reg8 = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/g
+
+    if (getType(value) == 'object') {
+        value = getVlue(value).replace(/[^0-9]/g, "")
+
+        return value.length == 8 ? reg8.test(value) : reg6.test(value)
+    } else {
+        return value.length == 8 ? reg8.test(value) : reg6.test(value)
     }
 }
 
@@ -276,8 +346,8 @@ function isBranchRegnum(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -294,8 +364,26 @@ function isBranchRegnum(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
+    } else {
+        return reg.test(value)
+    }
+}
+
+/**
+ * 파라미터가 정수가 포함되는지 확인한다.
+ * 
+ * @param {*} value 
+ * @returns 정수면 true, isEmpty() 아니면 false
+ */
+ function hasInteger(value) {
+    var reg = /[0-9]/
+
+    if (isEmpty(value)) return false
+
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -312,8 +400,8 @@ function isBranchRegnum(value) {
 
     if (isEmpty(value)) return false
 
-    if (checkType(value) == 'object') {
-        return reg.test(value.val())
+    if (getType(value) == 'object') {
+        return reg.test(getValue(value))
     } else {
         return reg.test(value)
     }
@@ -321,6 +409,53 @@ function isBranchRegnum(value) {
 
 /**
  * End of has function
+ */
+
+/**
+ * Start of get function
+ */
+
+/**
+ * 파라미터 값의 타입을 반환한다.
+ * 
+ * @param {*} value 타입을 확인할 파라미터
+ * @returns 타입의 종류
+ */
+ function getType(value) {
+    var type = typeof value
+
+    if (value === null) return 'null'
+    if (type == 'object' && Array.isArray(value)) return 'array'
+
+    return type
+}
+
+/**
+ * 파라미터가 객체의 value 를 리턴
+ *  
+ * @param {*} value 
+ * @returns 
+ */
+ function getValue(value) {
+    if(isJquery && value instanceof jQuery) {
+        value.val()
+    }
+
+    return value.value
+}
+
+function getCurrentScreenId() {
+    var currentUrl = location.href //현재 윈도우의 문서가 위치하는 url을 String으로 반환한다.
+
+    return currentUrl.substring(currentUrl.lastIndexOf('/') + 1, currentUrl.indexOf('.dev'))   // '/'문자 부터 문자열의 처음까지
+}
+
+/**
+ * End of get function
+ */
+
+/**
+ * Start of None-group function
  */
 
 /**
@@ -332,7 +467,7 @@ function isBranchRegnum(value) {
  * @param {string} methodType 요청할 HTTP 메서드
  * @param {function} callback success시 실행할 함수
  */
-function ajaxSubmit(url, data, dataType, methodType, callback) {
+ function ajaxSubmit(url, data, dataType, methodType, callback) {
     $.ajax({
         url: url,
         data: data,
@@ -348,76 +483,12 @@ function ajaxSubmit(url, data, dataType, methodType, callback) {
 }
 
 /**
- * 파라미터 값의 타입을 반환한다.
- * 
- * @param {*} value 타입을 확인할 파라미터
- * @returns 타입의 종류
+ * End of None-group function
  */
-function checkType(value) {
-    var type = typeof value
-
-    if (value === null) return 'null'
-    if (type == 'object' && Array.isArray(value)) return 'array'
-
-    return type
-}
 
 /**
- * 파라미터가 이메일 형식에 맞는지 검증
- * 
- * @param {*} email 
- * @returns 형식에 틀리면 true, 아니면 false
+ * Start of add, remove function
  */
-function valiEmail(email) {
-    var reg = /^([\w-]+)@((\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-
-    if (isEmpty(email)) return true
-
-    if (checkType(email) == 'object') {
-        return !reg.test(email.val())
-    } else {
-        return !reg.test(email)
-    }
-}
-
-/**
- * 파라미터가 휴대폰 형식에 맞는지 검증
- * 
- * @param {*} phone 
- * @returns 형식에 틀리면 true, 아니면 false
- */
-function valiPhone(phone) {
-    var reg = /^\d{2,3}-\d{3,4}-\d{4}$/
-
-    if (isEmpty(phone)) return true
-
-    if (checkType(phone) == 'object') {
-        return !reg.test(phone.val())
-    } else {
-        return !reg.test(phone)
-    }
-}
-
-/**
- * 파라미터가 생년월일 형식에 맞는지 검증
- * 
- * @param {*} birthday 8자리(19001231),6자리(001231), -제거하지 않아도됨
- * @returns 
- */
-function valiBirthday(birthday) {
-    if (isEmpty(birthday)) return true
-
-    birthday = birthday.replace(/[^0-9]/g, "");
-
-    var reg6 = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/g
-    var reg8 = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/g
-
-    if (checkType(birthday) == 'object') {
-        return birthday.val().length == 8 ? !reg8.test(birthday.val()) : !reg6.test(birthday.val())
-    } else {
-        return birthday.length == 8 ? !reg8.test(birthday) : !reg6.test(birthday)
-    }
-}
 
 /**
  * 3자리 숫자마다 콤마 추가
@@ -425,8 +496,12 @@ function valiBirthday(birthday) {
  * @param {*} value 
  * @returns 
  */
-function digitWithCommas(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+ function addCommaEveryThreeNumber(value) {
+    if (getType(value) == 'object') {
+        return getValue(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    } else {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
 }
 
 /**
@@ -435,8 +510,12 @@ function digitWithCommas(value) {
  * @param {*} value 
  * @returns 
  */
-function digitWithoutCommas(value) {
-    return value.toString().replace(/(,)/g, "")
+function removeComma(value) {
+    if (getType(value) == 'object') {
+        return getValue(value).replace(/(,)/g, "")
+    } else {
+        return value.replace(/(,)/g, "")
+    }
 }
 
 /**
@@ -445,12 +524,14 @@ function digitWithoutCommas(value) {
  * @param {*} html 
  * @returns 
  */
-function removeHtmlTag(html) {
-    return html.replace(/(<([^>]+)>)/gi, "")
+ function removeHtmlTag(value) {
+    if (getType(value) == 'object') {
+        return getValue(value).replace(/(<([^>]+)>)/gi, "")
+    } else {
+        return value.replace(/(<([^>]+)>)/gi, "")
+    }
 }
 
-function getCurrentScreenId() {
-    var currentUrl = location.href; //현재 윈도우의 문서가 위치하는 url을 String으로 반환한다.
-
-    return currentUrl.substring(currentUrl.lastIndexOf('/') + 1, currentUrl.indexOf('.dev'));   // '/'문자 부터 문자열의 처음까지
-}
+/**
+ * End of add, remove function
+ */
