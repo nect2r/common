@@ -19,10 +19,10 @@
  * -- get* () {} *를 가져온다.
  */
 
- var nect2rUtils = (function () {
-    'use strict'
+ ;var nect2rUtils = (function () {
+    'use strict';
 
-    var _utils = {}
+    var _utils = {};
 
     /**
      * 변수,상수 선언
@@ -31,30 +31,30 @@
     /**
      * Public function
      */
-    _utils.isEmpty = function(value) { return isEmpty(value) }
-    _utils.isKorean = function(value) { return isKorean(value) }
-    _utils.isAlphabet = function(value) { return isAlphabet(value) }
-    _utils.isInteger = function(value) { return isInteger(value) }
-    _utils.isIntegerByRegExp = function(value) { return isIntegerByRegExp(value) }
-    _utils.isFloatByRegExp = function(value) { return isFloatByRegExp(value) }
-    _utils.isNumber = function(value) { return isNumber(value) }
-    _utils.isAlphabetWithInteger = function(value) { return isAlphabetWithInteger(value) }
-    _utils.isBranchRegnum = function(value) { return isBranchRegnum(value) }
-    _utils.isEmail = function(value) { return isEmail(value) }
-    _utils.isPhone = function(value) { return isPhone(value) }
-    _utils.isBirthday = function(value) { return isBirthday(value) }
-    _utils.hasKorean = function(value) { return hasKorean(value) }
-    _utils.hasAlphabet = function(value) { return hasAlphabet(value) }
-    _utils.hasAlphabet = function(value) { return isEmail(value) }
-    _utils.hasInteger = function(value) { return hasInteger(value) }
-    _utils.hasSpace = function(value) { return hasSpace(value) }
-    _utils.getType = function(value) { return getType(value) }
-    _utils.getValue = function(value) { return getValue(value) }
-    _utils.ajaxSubmit = function(url, data, dataType, methodType, callback) { return ajaxSubmit(url, data, dataType, methodType, callback) }
-    _utils.addCommaEveryThreeNumber = function(value) { return addCommaEveryThreeNumber(value) }
-    _utils.removeComma = function(value) { return hasInteger(value) }
-    _utils.removeHtmlTag = function(value) { return removeHtmlTag(value) }
-    _utils.init = function(value) { return init(value) }
+    _utils.isEmpty = function(value) { return isEmpty(value); };
+    _utils.isKorean = function(value) { return isKorean(value); };
+    _utils.isAlphabet = function(value) { return isAlphabet(value); };
+    _utils.isInteger = function(value) { return isInteger(value); };
+    _utils.isIntegerByRegExp = function(value) { return isIntegerByRegExp(value); };
+    _utils.isFloatByRegExp = function(value) { return isFloatByRegExp(value); };
+    _utils.isNumber = function(value) { return isNumber(value); };
+    _utils.isAlphabetWithInteger = function(value) { return isAlphabetWithInteger(value); };
+    _utils.isBranchRegnum = function(value) { return isBranchRegnum(value); };
+    _utils.isEmail = function(value) { return isEmail(value); };
+    _utils.isPhone = function(value) { return isPhone(value); };
+    _utils.isBirthday = function(value) { return isBirthday(value); };
+    _utils.hasKorean = function(value) { return hasKorean(value); };
+    _utils.hasAlphabet = function(value) { return hasAlphabet(value); };
+    _utils.hasAlphabet = function(value) { return isEmail(value); };
+    _utils.hasInteger = function(value) { return hasInteger(value); };
+    _utils.hasSpace = function(value) { return hasSpace(value); };
+    _utils.getType = function(value) { return getType(value); };
+    _utils.getValue = function(value) { return getValue(value); };
+    _utils.ajaxSubmit = function(url, data, dataType, methodType, callback) { return ajaxSubmit(url, data, dataType, methodType, callback); };
+    _utils.addCommaEveryThreeNumber = function(value) { return addCommaEveryThreeNumber(value); };
+    _utils.removeComma = function(value) { return hasInteger(value); };
+    _utils.removeHtmlTag = function(value) { return removeHtmlTag(value); };
+    _utils.init = function(value) { return init(value); };
    
     /**
      * Start of is function
@@ -148,14 +148,14 @@
      * @returns 빈값이면 true 아니면 false
      */
     function isEmpty(value) {
-        if (value === null) return true
-        if (typeof value === 'undefined') return true
-        if (typeof value === 'string' && value === '') return true
-        if (Array.isArray(value) && value.length < 1) return true
-        if (typeof value === 'object' && value.constructor.name === 'Object' && Object.keys(value).length < 1 && Object.getOwnPropertyNames(value) < 1) return true
-        if (typeof value === 'object' && value.constructor.name === 'String' && Object.keys(value).length < 1) return true // new String()
+        if (value === null) return true;
+        if (typeof value === 'undefined') return true;
+        if (typeof value === 'string' && value === '') return true;
+        if (Array.isArray(value) && value.length < 1) return true;
+        if (typeof value === 'object' && value.constructor.name === 'Object' && Object.keys(value).length < 1 && Object.getOwnPropertyNames(value) < 1) return true;
+        if (typeof value === 'object' && value.constructor.name === 'String' && Object.keys(value).length < 1) return true; // new String()
 
-        return false
+        return false;
     }
 
     /**
@@ -164,9 +164,9 @@
      * @returns jquery가 존재하면 true, 아니면 false
      */
     function isJquery() {
-        if(typeof jQuery == 'undefined') return false
+        if(typeof jQuery == 'undefined') return false;
 
-        return true
+        return true;
     }
 
     /**
@@ -176,14 +176,14 @@
      * @returns 한글만 있으면 true, isEmpty() 아니면 false
      */
     function isKorean(value) {
-        var reg = /^[ㄱ-ㅎ가-힣-ㅏ-ㅣ]+$/
+        var reg = /^[ㄱ-ㅎ가-힣-ㅏ-ㅣ]+$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -194,14 +194,14 @@
      * @returns 알파벳만 있으면 true, isEmpty() 아니면 false
      */
     function isAlphabet(value) {
-        var reg = /^[a-zA-Z]+$/
+        var reg = /^[a-zA-Z]+$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -212,12 +212,12 @@
      * @returns 정수면 true, isEmpty() 아니면 false
      */
     function isInteger(value) {
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return Number(getValue(value)) % 1 === 0
+            return Number(getValue(value)) % 1 === 0;
         } else {
-            return Number(value) % 1 === 0
+            return Number(value) % 1 === 0;
         }
     }
 
@@ -228,14 +228,14 @@
      * @returns 정수면 true, isEmpty() 아니면 false
      */
     function isIntegerByRegExp(value) {
-        var reg = /^[0-9]+$/
+        var reg = /^[0-9]+$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -246,14 +246,14 @@
      * @returns 소수면 true, isEmpty() 아니면 false
      */
     function isFloatByRegExp(value) {
-        var reg = /^\d+?[.]\d+?$/
+        var reg = /^\d+?[.]\d+?$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -264,14 +264,14 @@
      * @returns 숫자면 true, isEmpty() 아니면 false
      */
     function isNumber(value) {
-        var reg = /^(([\d])|(\d+?[.]{1}\d+?))+$/
+        var reg = /^(([\d])|(\d+?[.]{1}\d+?))+$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -282,12 +282,12 @@
      * @returns 알파벳과 정수만 true, 아니면 false
      */
     function isAlphabetWithInteger(value) {
-        var reg = /^[a-zA-Z0-9]+$/
+        var reg = /^[a-zA-Z0-9]+$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return !reg.test(getValue(value))
+            return !reg.test(getValue(value));
         } else {
             return !reg.test(value)
         }
@@ -300,14 +300,14 @@
      * @returns 사업자번호면 true, 아니면 false
      */
     function isBranchRegnum(value) {
-        var reg = /^\d{3}-\d{2}-\d{5}$/
+        var reg = /^\d{3}-\d{2}-\d{5}$/;
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -318,14 +318,14 @@
      * @returns 이메일 형식이면 true, 아니면 false
      */
     function isEmail(value) {
-        var reg = /^([\w-]+)@((\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+        var reg = /^([\w-]+)@((\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
-        if (isEmpty(value)) return true
+        if (isEmpty(value)) return true;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -336,14 +336,14 @@
      * @returns 휴대폰 형식이면 true, 아니면 false
      */
     function isPhone(value) {
-        var reg = /^\d{2,3}-\d{3,4}-\d{4}$/
+        var reg = /^\d{2,3}-\d{3,4}-\d{4}$/;
 
-        if (isEmpty(value)) return true
+        if (isEmpty(value)) return true;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -354,10 +354,10 @@
      * @returns 
      */
     function isBirthday(value) {
-        if (isEmpty(value)) return true
+        if (isEmpty(value)) return true;
         
         var reg6 = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/g
-        var reg8 = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/g
+        var reg8 = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;g
 
         if (getType(value) == 'object') {
             value = getVlue(value).replace(/[^0-9]/g, "")
@@ -385,12 +385,12 @@
     function hasKorean(value) {
         var reg = /[ㄱ-ㅎ가-힣-ㅏ-ㅣ]/
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -403,12 +403,12 @@
     function hasAlphabet(value) {
         var reg = /[a-zA-Z]/
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -421,12 +421,12 @@
     function hasInteger(value) {
         var reg = /[0-9]/
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -439,12 +439,12 @@
     function hasSpace(value) {
         var reg = / /
 
-        if (isEmpty(value)) return false
+        if (isEmpty(value)) return false;
 
         if (getType(value) == 'object') {
-            return reg.test(getValue(value))
+            return reg.test(getValue(value));
         } else {
-            return reg.test(value)
+            return reg.test(value);
         }
     }
 
@@ -468,7 +468,7 @@
         if (value === null) return 'null'
         if (type == 'object' && Array.isArray(value)) return 'array'
 
-        return type
+        return type;
     }
 
     /**
@@ -479,16 +479,16 @@
      */
     function getValue(value) {
         if(isJquery && value instanceof jQuery) {
-            value.val()
+            value.val();
         }
 
-        return value.value
+        return value.value;
     }
 
     function getCurrentScreenId() {
-        var currentUrl = location.href //현재 윈도우의 문서가 위치하는 url을 String으로 반환한다.
+        var currentUrl = location.href; //현재 윈도우의 문서가 위치하는 url을 String으로 반환한다.
 
-        return currentUrl.substring(currentUrl.lastIndexOf('/') + 1, currentUrl.indexOf('.dev'))   // '/'문자 부터 문자열의 처음까지
+        return currentUrl.substring(currentUrl.lastIndexOf('/') + 1, currentUrl.indexOf('.dev'));   // '/'문자 부터 문자열의 처음까지
     }
 
     /**
@@ -520,7 +520,7 @@
             error: function (e) {
                 alert("error : " + e.responseText)
             }
-        })
+        });
     }
 
     /**
@@ -539,9 +539,9 @@
      */
     function addCommaEveryThreeNumber(value) {
         if (getType(value) == 'object') {
-            return getValue(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            return getValue(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         } else {
-            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     }
 
@@ -553,9 +553,9 @@
      */
     function removeComma(value) {
         if (getType(value) == 'object') {
-            return getValue(value).replace(/(,)/g, "")
+            return getValue(value).replace(/(,)/g, "");
         } else {
-            return value.replace(/(,)/g, "")
+            return value.replace(/(,)/g, "");
         }
     }
 
@@ -567,9 +567,9 @@
      */
     function removeHtmlTag(value) {
         if (getType(value) == 'object') {
-            return getValue(value).replace(/(<([^>]+)>)/gi, "")
+            return getValue(value).replace(/(<([^>]+)>)/gi, "");
         } else {
-            return value.replace(/(<([^>]+)>)/gi, "")
+            return value.replace(/(<([^>]+)>)/gi, "");
         }
     }
 
@@ -577,9 +577,9 @@
      * End of add, remove function
      */
 
-    return init()
+    return init();
 
     function init() {
-        return _utils
+        return _utils;
     }
 })()
