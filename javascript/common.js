@@ -24,6 +24,8 @@
 
     var _utils = {};
 
+    var _cookie = {};
+
     /**
      * 변수,상수 선언
      */
@@ -45,7 +47,6 @@
     _utils.isBirthday = function(value) { return isBirthday(value); };
     _utils.hasKorean = function(value) { return hasKorean(value); };
     _utils.hasAlphabet = function(value) { return hasAlphabet(value); };
-    _utils.hasAlphabet = function(value) { return isEmail(value); };
     _utils.hasInteger = function(value) { return hasInteger(value); };
     _utils.hasSpace = function(value) { return hasSpace(value); };
     _utils.getType = function(value) { return getType(value); };
@@ -55,6 +56,55 @@
     _utils.removeComma = function(value) { return hasInteger(value); };
     _utils.removeHtmlTag = function(value) { return removeHtmlTag(value); };
     _utils.init = function(value) { return init(value); };
+
+    _utils.cookie = _cookie;
+
+    _cookie.setCookie = function (cookieNm, val, exp) { return setCookie(cookieNm, val, exp); };
+    _cookie.delCookie = function (cookieNm) { return delCookie(cookieNm); };
+    _cookie.getCookie = function (cookieNm) { return getCookie(cookieNm); };
+
+    /**
+     * Start of Cookie function
+     */
+
+    /**
+     * 쿠기등록하기
+     * 
+     * @param {*} cookieNm 
+     * @returns 
+     */
+    function setCookie(cookieNm, val, exp) {
+        var date = new Date();
+        date.setDate(date.getDate() + exp);
+        document.cookie = cookieNm + '=' + val+ ';expires=' + date.toGMTString() + ';path=/';
+    };
+
+    /**
+     * 쿠키삭제하기
+     * 
+     * @param {*} cookieNm 
+     * @returns 
+     */
+    function delCookie(cookieNm) {
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        document.cookie = cookieNm+ "= " + "; expires=" + date.toGMTString();
+    };
+
+    /**
+     * 쿠키가져오기
+     * 
+     * @param {*} cookieNm 
+     * @returns 
+     */
+    function getCookie(cookieNm) {
+        var cookieValue = document.cookie.match('(^|;) ?' + cookieNm + '=([^;]*)(;|$)'); 
+        return decodeURI(cookieValue);
+    };
+
+    /**
+     * End of Cookie function
+     */
    
     /**
      * Start of is function
@@ -583,3 +633,150 @@
         return _utils;
     }
 })()
+
+//formdata 필수 검증
+
+//비밀번호 검증
+
+function alertCloseBody(e) {
+    if(e.target.classList[0] == 'backgroud-div'){
+        document.getElementsByClassName('backgroud-div')[0].remove();
+    }
+}
+
+function alertClose(e) {
+    document.getElementsByClassName('backgroud-div')[0].remove();
+}
+
+//alert 꾸미기
+function alert2() {
+    var backgroudDiv = document.createElement('div');
+
+    backgroudDiv.style.position = 'fixed';
+    backgroudDiv.style.width = '100%';
+    backgroudDiv.style.height = '100%';
+    backgroudDiv.style.top = '0px';
+    backgroudDiv.style.left = '0px';
+    backgroudDiv.style.padding = '0';
+    backgroudDiv.style.margin = '0';
+    backgroudDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.35)';
+    backgroudDiv.style.overflow = 'auto';
+    backgroudDiv.style.zIndex = '1500';
+    backgroudDiv.classList.add('backgroud-div');
+    backgroudDiv.onclick = alertCloseBody;
+
+    var modalBoxDiv = document.createElement('div');
+
+    document.body.appendChild(backgroudDiv);
+
+    modalBoxDiv.style.position = 'absolute';
+    modalBoxDiv.style.top = '50%';
+    modalBoxDiv.style.left = '50%';
+    modalBoxDiv.style.marginTop = '-175px';
+    modalBoxDiv.style.marginLeft = '-175px';
+    modalBoxDiv.style.width = '350px';
+    modalBoxDiv.style.backgroundColor = '#ffffff';
+    modalBoxDiv.style.borderRadius = '4px';
+    modalBoxDiv.style.boxShadow = '0 0px 7px rgb(0 0 0 / 30%)';
+    modalBoxDiv.classList.add('modal-box-div');
+
+    backgroudDiv.appendChild(modalBoxDiv);
+
+    var modalInnerDiv = document.createElement('div');
+
+    modalInnerDiv.style.position = 'relative';
+    modalInnerDiv.style.borderRadius = '4px';
+    modalInnerDiv.classList.add('modal-inner-div');
+
+    modalBoxDiv.appendChild(modalInnerDiv);
+
+    var modalTitleDiv = document.createElement('div');
+
+    modalTitleDiv.style.position = 'relative';
+    modalTitleDiv.style.backgroundColor = '#434a7b';
+    modalTitleDiv.style.padding = '16px 15px';
+    modalTitleDiv.style.borderBottom = '1px solid #e5e5e5';
+    modalTitleDiv.style.fontSize = '20px';
+    modalTitleDiv.style.overflow = 'hidden';
+    modalTitleDiv.style.borderRadius = '4px 4px 0 0';
+    modalTitleDiv.classList.add('modal-title-div');
+
+    var modalTitleDivH3 = document.createElement('h3');
+
+    modalTitleDivH3.style.fontSize = '20px';
+    modalTitleDivH3.style.fontWeight = 'normal';
+    modalTitleDivH3.style.lineHeight = 'normal';
+    modalTitleDivH3.style.display = 'inline-block';
+    modalTitleDivH3.style.margin = '0';
+    modalTitleDivH3.style.padding = '0';
+    modalTitleDivH3.style.color = '#ffffff';
+
+    var modalTitleDivA = document.createElement('a');
+
+    modalTitleDivA.style.href = '#none';
+    modalTitleDivA.style.title = '닫기';
+    modalTitleDivA.style.position = 'absolute';
+    modalTitleDivA.style.display = 'block';
+    modalTitleDivA.style.width = '14px';
+    modalTitleDivA.style.height = '14px';
+    modalTitleDivA.style.right = '20px';
+    modalTitleDivA.style.top = '50%';
+    modalTitleDivA.style.marginTop = '-7px';
+    modalTitleDivA.style.backgroundSize = '14px,14px';
+    modalTitleDivA.style.background = 'url(javascript/img/alert/icon_close.png) no-repeat center';
+    modalTitleDivA.style.opacity = '1';
+    modalTitleDivA.style.cursor = 'pointer';
+    modalTitleDivA.onclick = alertClose;
+
+    var modalTitleDivText = document.createTextNode('제목');
+
+    modalTitleDivH3.appendChild(modalTitleDivText);
+    modalTitleDiv.appendChild(modalTitleDivH3);
+    modalTitleDiv.appendChild(modalTitleDivA);
+    modalInnerDiv.appendChild(modalTitleDiv);
+
+    var modalTextDiv = document.createElement('div');
+
+    modalTextDiv.style.padding = '7px 15px';
+    modalTextDiv.style.height = '150px';
+    modalTextDiv.style.marginBottom = '7px';
+    modalTextDiv.style.marginTop = '20px';
+    modalTextDiv.style.textAlign = 'center';
+    modalTextDiv.style.boxSizing = 'border-box';
+    modalTextDiv.style.paddingTop = '80px';
+
+    var modalTextDivText = document.createTextNode('내용');
+
+    modalTextDiv.appendChild(modalTextDivText);
+    modalInnerDiv.appendChild(modalTextDiv);
+
+    var modalButtonDiv = document.createElement('div');
+
+    modalButtonDiv.style.padding = '10px 15px';
+    modalButtonDiv.style.textAlign = 'center';
+    modalButtonDiv.style.margin = '0';
+
+    var modalButtonDivA = document.createElement('a');
+
+    modalButtonDivA.style.display = 'inline-block';
+    modalButtonDivA.style.padding = '5px 8px';
+    modalButtonDivA.style.border = '1px solid transparent';
+    modalButtonDivA.style.cursor = 'pointer';
+    modalButtonDivA.style.textDecoration = 'none';
+    modalButtonDivA.style.textAlign = 'center';
+    modalButtonDivA.style.whiteSpace = 'nowrap';
+    modalButtonDivA.style.fontSize = '12px';
+    modalButtonDivA.style.fontWeight = 'bold';
+    modalButtonDivA.style.lineHeight = 'normal';
+    modalButtonDivA.style.verticalAlign = 'middle';
+    modalButtonDivA.style.backgroundColor = '#434a7b';
+    modalButtonDivA.style.color = '#ffffff';
+    modalButtonDivA.style.width = '80px';
+    modalButtonDivA.style.borderColor = '#c9c9c9';
+    modalButtonDivA.style.borderRadius = '#3px';
+    modalButtonDivA.style.boxShadow = '#0 1px 1px rgb(0 0 0 / 8%)';
+    modalButtonDivA.text = '확인';
+
+    modalButtonDiv.appendChild(modalButtonDivA);
+    modalInnerDiv.appendChild(modalButtonDiv);
+};
