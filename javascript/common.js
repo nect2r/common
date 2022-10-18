@@ -635,5 +635,9 @@
 })()
 
 //formdata 필수 검증
+function focusOnEmptyFormdata() {
+    
+}
+
 
 //비밀번호 검증
